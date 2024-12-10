@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="container text-center" style="margin-top: 5%;"> 
+
+    <!-- Page Title with Animation -->
+    <div class="row" id="title" style="animation: fadeIn 1s ease-out;">
+      <h1 class="display-3 text-primary font-weight-bold">How to Enable 2FA</h1>
+    </div>
+    
+    <!-- 2FA Setup Instructions -->
+    <div class="row" style="margin-top: 5%;">
+
+      {% if secret_key %}
+        <!-- Step-by-Step Instructions with Key Display -->
+        <div class="six columns" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+          <form action="/login/auth" method="GET">
+            <h3 class="text-info">Follow these steps to enable 2FA:</h3>
+            <ul class="text-left" style="font-size: 1.1rem;">
+              <li>Open Microsoft Authenticator App on iPhone</li>
+              <li>Tap on the + button in the top left corner</li>
+              <li>Then tap on 'Other' on the bottom</li>
+              <li>Select 'Or enter code manually'</ul>
+              <li>Name the account on the 'Account name' line</li>
+              <li>Type the text written below into the line 'Secret key'</li>
+              <li>Click 'Finish'</li>
+              <li>Then select 'Done' down below</li>
+            </ul>
+            
+            <div class="row" style="margin-top: 20px;">
+              <div class="ten columns">
+                <input class="u-full-width" type="text" value="{{ secret_key }}" readonly style="font-weight: bold; padding: 10px; border: 2px solid #4CAF50; border-radius: 5px; background-color: #f4f4f4;">
+              </div>
+            </div>
+            
+            <div class="row" style="margin-top: 20px;">
+              <div class="three columns">
+                <input class="button-primary" type="submit" value="Done" style="background-color: #861112; color: white; padding: 12px 25px; font-size: 16px; border-radius: 25px; border: none; cursor: pointer; transition: background-color 0.3s ease;">
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      {% else %}
+        <!-- OTP Input Form for Verification -->
+        <div class="six columns" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+          <form action="/login/auth" method="POST">
+            <h3 class="text-warning">Enter your OTP below to verify:</h3>
+            <div class="row">
+              <div class="six columns">
+                <label for="otp" style="font-weight: bold;">Your OTP:</label>
+                <input class="u-full-width" type="text" id="otp" name="otp" required style="border-radius: 5px; padding: 10px; border: 1px solid #ddd; transition: border 0.3s ease;">
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+              <div class="three columns">
+                <input class="button-primary" type="submit" value="Verify OTP" style="background-color: #5A5A5A; color: white; padding: 12px 25px; font-size: 16px; border-radius: 25px; border: none; cursor: pointer; transition: background-color 0.3s ease;">
+              </div>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <!-- CSS for Animations and Styling -->
+  <style>
+    /* Animations */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hover Effects */
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #861112;
+      outline: none;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #5A5A5A;
+    }
+
+    /* Background and Layout Enhancements */
+    body {
+      background: linear-gradient(135deg, #5A5A5A, #5A5A5A);
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      color: #333;
+    }
+
+    .button-primary {
+      transition: all 0.3s ease;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1.1rem;
+    }
+
+    ul li {
+      padding: 5px 0;
+    }
+
+    .button-primary {
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"] {
+      transition: all 0.3s ease;
+    }
+  </style>
+
+{% endblock %}
